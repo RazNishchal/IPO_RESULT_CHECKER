@@ -1,0 +1,10 @@
+{
+  "name": "ipo-bulk-checker-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"cd backend && npx nodemon server.js\" \"cd frontend && npm start\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

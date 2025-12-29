@@ -1,0 +1,252 @@
+/* 1. THEME VARIABLES (The Level System) */
+:root {
+  --bg-main: #f1f5f9;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #10b981;
+  --danger: #ef4444;
+  --border: #e2e8f0;
+  --input-bg: #ffffff;
+}
+
+/* Dark Mode Levels */
+.dark {
+  --bg-main: #020617;
+  --card-bg: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary: #3b82f6;
+  --border: #334155;
+  --input-bg: #0f172a;
+}
+
+/* 2. GLOBAL RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* 3. LAYOUT COMPONENTS */
+.app-container {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-card {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* 4. AUTH COMPONENTS (Login/Register) */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-card {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.login-card h2 { margin-bottom: 24px; color: var(--primary); }
+
+.input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: 2px solid var(--primary);
+  border-color: transparent;
+}
+
+/* 5. BUTTONS */
+button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+.btn-primary { background: var(--primary); color: white; width: 100%; }
+.btn-primary:hover { background: var(--primary-hover); }
+
+.google-btn {
+  background: white;
+  color: #444;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.toggle-text {
+  margin-top: 20px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* 6. IPO COMPONENTS (Dashboard) */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.captcha-card {
+  background: rgba(37, 99, 235, 0.05);
+  border: 2px dashed var(--primary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.captcha-card img {
+  height: 60px;
+  background: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.settings-form {
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.settings-form label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  padding: 1rem 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-menu {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-menu button {
+  background: transparent;
+  color: var(--text-main);
+  padding: 8px 16px;
+  border: 1px solid transparent;
+}
+
+.nav-menu button.active-nav {
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+  border-radius: 0;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-not-checked { color: #888; }
+.status-congratulations { color: #2ecc71; font-weight: bold; }
+.status-sorry { color: #e74c3c; }
+
+.captcha-card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* 7. RESPONSIVE TABLE */
+.table-responsive { width: 100%; overflow-x: auto; }
+.ipo-table { width: 100%; border-collapse: collapse; }
+.ipo-table th { text-align: left; padding: 12px; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; }
+.ipo-table td { padding: 16px 12px; border-bottom: 1px solid var(--border); }
+
+.success { color: var(--success); font-weight: bold; }
+.fail { color: var(--danger); font-weight: 500; }
+
+/* 8. MOBILE ADAPTATION (Levels for phones) */
+@media (max-width: 768px) {
+  .controls-grid { grid-template-columns: 1fr; }
+  
+  .ipo-table thead { display: none; }
+  .ipo-table tr {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    padding: 12px;
+  }
+  .ipo-table td {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+    padding: 8px 0;
+    text-align: right;
+  }
+  .ipo-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: var(--text-muted);
+  }
+}
