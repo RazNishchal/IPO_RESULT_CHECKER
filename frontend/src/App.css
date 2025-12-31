@@ -1,252 +1,158 @@
-/* 1. THEME VARIABLES (The Level System) */
+/* Import the professional font families */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+/* --- Global Font Application --- */
 :root {
-  --bg-main: #f1f5f9;
-  --card-bg: #ffffff;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --success: #10b981;
-  --danger: #ef4444;
-  --border: #e2e8f0;
-  --input-bg: #ffffff;
+  /* This restores the clean, premium feel */
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-data: 'JetBrains Mono', monospace;
 }
 
-/* Dark Mode Levels */
-.dark {
-  --bg-main: #020617;
-  --card-bg: #1e293b;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --primary: #3b82f6;
-  --border: #334155;
-  --input-bg: #0f172a;
+body, html {
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. GLOBAL RESET */
+
+
+/* 1. DEFINE COLORS FOR LIGHT MODE */
+/* LIGHT THEME (Default) */
+
+
+/* LIGHT THEME: Strong contrast for white background */
+:root, .light-theme {
+  --bg-app: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-input: #f8fafc;
+  --text-primary: #0f172a;    /* Very dark navy */
+  --text-secondary: #475569;  /* Slate grey */
+  --border-subtle: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* DARK THEME: High contrast for dark background */
+.dark-theme {
+  --bg-app: #020617;          /* Almost black navy */
+  --bg-card: #0f172a;         /* Deep slate */
+  --bg-input: #1e293b;        /* Lighter slate for inputs */
+  --text-primary: #f8fafc;    /* Off-white (easy on eyes) */
+  --text-secondary: #94a3b8;  /* Light slate grey */
+  --border-subtle: #334155;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* Global Font Contrast Reset */
+body {
+  background-color: var(--bg-app);
+  color: var(--text-primary); /* Ensures global text changes */
+  transition: all 0.25s ease-in-out;
+}
+
+h1, h2, h3, h4, p, span, label, td, th {
+  color: var(--text-primary); /* Force all tags to inherit variable */
+}
+
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-main);
+  margin: 0;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 3. LAYOUT COMPONENTS */
-.app-container {
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Ensure cards and inputs use these variables */
+.transaction-card, .navbar, .dashboard-header-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }
 
-.main-card {
-  width: 100%;
-  max-width: 1000px;
-  background: var(--card-bg);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+.input-field {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
 }
 
-/* 4. AUTH COMPONENTS (Login/Register) */
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* --- Global Container --- */
+.dashboard-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 90px 20px 20px 20px; /* Offset for fixed navbar */
+  font-family: var(--font-main);
 }
 
-.login-card {
-  background: var(--card-bg);
-  padding: 40px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+/* Ensure headings use the boldest weight for that premium look */
+h1, h2, h3, .form-title {
+  font-family: var(--font-main);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
-.login-card h2 { margin-bottom: 24px; color: var(--primary); }
-
-.input-group {
-  margin-bottom: 16px;
-  text-align: left;
+/* Apply monospace to numbers/tables if they are inside these containers */
+.portfolio-table, 
+.drop-price, 
+.stat-value, 
+input[type="number"] {
+  font-family: var(--font-data) !important;
 }
 
-input, select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
-  color: var(--text-main);
-  font-size: 1rem;
-}
-
-input:focus {
-  outline: 2px solid var(--primary);
-  border-color: transparent;
-}
-
-/* 5. BUTTONS */
-button {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: 0.2s;
-}
-
-.btn-primary { background: var(--primary); color: white; width: 100%; }
-.btn-primary:hover { background: var(--primary-hover); }
-
-.google-btn {
-  background: white;
-  color: #444;
-  border: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-  width: 100%;
-}
-
-.toggle-text {
-  margin-top: 20px;
-  color: var(--primary);
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-/* 6. IPO COMPONENTS (Dashboard) */
-.controls-grid {
+/* --- LAPTOP/DESKTOP VIEW --- */
+.input-analysis-row {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 12px;
-  margin-bottom: 30px;
-}
-
-.captcha-card {
-  background: rgba(37, 99, 235, 0.05);
-  border: 2px dashed var(--primary);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
+  grid-template-columns: 1fr 1fr; /* 50/50 split */
+  gap: 24px;
   margin-bottom: 24px;
 }
 
-.captcha-card img {
-  height: 60px;
-  background: white;
-  padding: 5px;
-  border-radius: 4px;
-  margin: 10px 0;
-}
-
-.settings-form {
-  max-width: 400px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.settings-form label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 5px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.full-row-item {
   width: 100%;
-  max-width: 1000px;
-  padding: 1rem 0;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 30px;
 }
 
-.nav-menu {
-  display: flex;
-  gap: 15px;
-}
-
-.nav-menu button {
-  background: transparent;
-  color: var(--text-main);
-  padding: 8px 16px;
-  border: 1px solid transparent;
-}
-
-.nav-menu button.active-nav {
-  border-bottom: 2px solid var(--primary);
-  color: var(--primary);
-  border-radius: 0;
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.status-not-checked { color: #888; }
-.status-congratulations { color: #2ecc71; font-weight: bold; }
-.status-sorry { color: #e74c3c; }
-
-.captcha-card {
-  background: var(--card-bg);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-/* 7. RESPONSIVE TABLE */
-.table-responsive { width: 100%; overflow-x: auto; }
-.ipo-table { width: 100%; border-collapse: collapse; }
-.ipo-table th { text-align: left; padding: 12px; color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; }
-.ipo-table td { padding: 16px 12px; border-bottom: 1px solid var(--border); }
-
-.success { color: var(--success); font-weight: bold; }
-.fail { color: var(--danger); font-weight: 500; }
-
-/* 8. MOBILE ADAPTATION (Levels for phones) */
-@media (max-width: 768px) {
-  .controls-grid { grid-template-columns: 1fr; }
+/* --- TABLET/MEDIUM SCREEN --- */
+@media (max-width: 1024px) {
+  .dashboard-header-container {
+    grid-template-columns: repeat(3, 1fr); 
+  }
   
-  .ipo-table thead { display: none; }
-  .ipo-table tr {
-    display: block;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 16px;
-    padding: 12px;
+  .input-analysis-row {
+    grid-template-columns: 1fr; 
   }
-  .ipo-table td {
-    display: flex;
-    justify-content: space-between;
-    border: none;
-    padding: 8px 0;
-    text-align: right;
+}
+
+/* --- MOBILE SCREEN --- */
+@media (max-width: 768px) {
+  .dashboard-header-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
-  .ipo-table td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    color: var(--text-muted);
+  
+  .dashboard-header-container > :last-child {
+    grid-column: span 2; 
   }
+
+  .input-analysis-row {
+    grid-template-columns: 1fr;
+  }
+
+  .market-movers-grid {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 15px;
+  }
+}
+
+.loading-screen {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-app);
+  font-family: var(--font-main);
 }

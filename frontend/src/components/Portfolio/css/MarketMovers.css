@@ -1,0 +1,218 @@
+/* Container Layout */
+.market-movers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 1.5rem;
+    background: #f8fafc; /* Light background to make cards pop */
+    border-radius: 16px;
+}
+
+/* Individual Column Styling */
+.mover-column {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    transition: transform 0.2s ease;
+}
+
+.mover-column:hover {
+    transform: translateY(-4px);
+}
+
+/* Titles with Accent Border */
+.mover-column h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.mover-column.gainers h3 { border-color: #22c55e20; }
+.mover-column.losers h3 { border-color: #ef444420; }
+
+/* Grid and Header */
+.mover-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mover-header {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+
+/* Row Styling */
+.mover-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr;
+    align-items: center;
+    padding: 0.85rem 0.75rem;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.mover-row:hover {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+/* Typography & Colors */
+.font-bold {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.95rem;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-green {
+    color: #15803d;
+    font-weight: 600;
+    background: #f0fdf4;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.text-red {
+    color: #b91c1c;
+    font-weight: 600;
+    background: #fef2f2;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Responsive Tweak */
+@media (max-width: 640px) {
+    .market-movers-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.market-movers-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* On very small phones, switch to stacking */
+@media (max-width: 600px) {
+  .market-movers-container {
+    grid-template-columns: 1fr; 
+    gap: 1rem;
+  }
+}
+
+
+/* Container Layout */
+.market-movers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--bg-app); /* Adapts to theme background */
+    border-radius: 16px;
+    margin-bottom: 2rem;
+}
+
+/* Individual Column Styling */
+.mover-column {
+    background: var(--bg-card); /* Flips between White and Dark Slate */
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-subtle);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.mover-column:hover {
+    transform: translateY(-4px);
+}
+
+/* Titles with Theme Support */
+.mover-column h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary); /* Automatically flips white/black */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border-subtle);
+}
+
+/* Header Labels */
+.mover-header {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-secondary); /* Muted slate in light, light grey in dark */
+}
+
+/* Row Styling */
+.mover-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr;
+    align-items: center;
+    padding: 0.85rem 0.75rem;
+    border-radius: 10px;
+    background: transparent;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.mover-row:hover {
+    background: var(--bg-input); /* Subtle highlight */
+}
+
+/* Typography & Colors */
+.font-bold {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Financial Indicators (High Contrast) */
+.text-green {
+    color: #10b981; /* Green stays green but pops */
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}
+
+.text-red {
+    color: #f43f5e; /* Red stays red but pops */
+    font-weight: 700;
+    background: rgba(244, 63, 94, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}

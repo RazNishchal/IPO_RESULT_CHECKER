@@ -1,60 +1,137 @@
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../../firebase';
+import React, { useState, useEffect } from 'react';
+import {
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    sendEmailVerification,
+    signOut
+} from 'firebase/auth';
+import { auth, APP_URL } from '../../firebase';
+import '../css/auth.css'; // Path: Auth -> components -> src -> css -> auth.css
 
 const Login = ({ toggleToRegister }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [status, setStatus] = useState({ type: '', text: '' });
+    const [loading, setLoading] = useState(false);
+
+    // Auto-clear status messages
+    useEffect(() => {
+        if (status.text) {
+            const timer = setTimeout(() => setStatus({ type: '', text: '' }), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [status]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const userCred = await signInWithEmailAndPassword(auth, email, password);
-
-            // Check if "OTP" (Verification Link) was clicked
-            // Google users are automatically verified by Firebase
             if (!userCred.user.emailVerified) {
-                alert("Please verify your email first! Check your inbox for the verification link.");
-                await auth.signOut();
-                return;
+                setStatus({ type: 'error', text: 'Please verify your email first!' });
+                await signOut(auth);
             }
         } catch (err) {
-            alert(err.message);
+            setStatus({ type: 'error', text: 'Invalid email or password.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleResendVerification = async () => {
+        if (!email || !password) {
+            return setStatus({ type: 'error', text: 'Enter credentials to resend link.' });
+        }
+        setLoading(true);
+        try {
+            const userCred = await signInWithEmailAndPassword(auth, email, password);
+            const actionCodeSettings = {
+                url: `${APP_URL}/verify`,
+                handleCodeInApp: true
+            };
+            await sendEmailVerification(userCred.user, actionCodeSettings);
+            await signOut(auth);
+            setStatus({ type: 'success', text: 'A fresh link has been sent to your Gmail!' });
+        } catch (err) {
+            setStatus({ type: 'error', text: err.message });
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleForgotPassword = async () => {
-        if (!email) return alert("Please type your email address in the box above first.");
+        if (!email) return setStatus({ type: 'error', text: 'Please enter your email first.' });
+
+        setLoading(true);
+        const actionCodeSettings = {
+            url: APP_URL,
+            handleCodeInApp: true
+        };
+
         try {
-            await sendPasswordResetEmail(auth, email);
-            alert("A password reset link (OTP) has been sent to your email!");
+            await sendPasswordResetEmail(auth, email, actionCodeSettings);
+            setStatus({ type: 'success', text: 'Reset link sent! Check your Gmail.' });
         } catch (err) {
-            alert(err.message);
+            setStatus({ type: 'error', text: 'Account not found.' });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="login-card">
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
-                <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required />
-                <button type="submit" className="btn-primary">Sign In</button>
-            </form>
+        <div className="auth-wrapper">
+            <div className="form-slide-in">
+                <div className="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Enter your details to manage your IPOs</p>
+                </div>
 
-            <p onClick={handleForgotPassword} className="toggle-text" style={{ color: '#e74c3c', marginTop: '10px' }}>
-                Forgot Password?
-            </p>
+                {/* Status message placed between header and form */}
+                {status.text && (
+                    <div className={`status-msg ${status.type}`}>
+                        {status.text}
+                    </div>
+                )}
 
-            <div className="separator"><span>OR</span></div>
+                <form onSubmit={handleLogin} className="auth-form-body">
+                    <div className="input-field">
+                        <label>Email Address</label>
+                        <input
+                            type="email"
+                            placeholder="name@company.com"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
 
-            <button className="google-btn" onClick={() => signInWithPopup(auth, googleProvider)}>
-                Continue with Google
-            </button>
+                    <div className="input-field">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
 
-            <p onClick={toggleToRegister} className="toggle-text">
-                Don't have an account? <strong>Register</strong>
-            </p>
+                    <div className="forgot-link-container">
+                        <span onClick={handleForgotPassword} className="link-btn-small">Forgot Password?</span>
+                        <span onClick={handleResendVerification} className="link-btn-small" style={{ color: '#64748b' }}>Resend Link?</span>
+                    </div>
+
+                    <button type="submit" className="btn-auth" disabled={loading}>
+                        {loading ? "Authenticating..." : "Sign In"}
+                    </button>
+                </form>
+
+                <div className="auth-footer">
+                    <p>Don't have an account?
+                        <button onClick={toggleToRegister} className="link-btn">Register</button>
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };

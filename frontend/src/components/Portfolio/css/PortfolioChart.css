@@ -1,0 +1,150 @@
+/* --- MAIN CONTAINER --- */
+.portfolio-chart-container {
+    background-color: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-main, 0 4px 20px rgba(0, 0, 0, 0.08));
+    width: 100%;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+    color: var(--text-primary);
+}
+
+/* Hover lift effect */
+.portfolio-chart-container:hover {
+    transform: translateY(-8px);
+}
+
+/* --- HEADER SECTION --- */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.title-icon {
+    font-size: 1.2rem;
+}
+
+/* --- BADGE FOR EMPTY STATE --- */
+.dummy-badge {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    background: rgba(255, 193, 7, 0.15);
+    color: #fbbf24;
+    border-radius: 20px;
+    font-weight: 700;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- CHART WRAPPER --- */
+.pie-chart-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* SVG Text Styling (Recharts Labels) */
+.recharts-pie-label-text {
+    font-size: 12px;
+    font-weight: 700;
+    /* Color is injected via JS fill prop */
+}
+
+/* --- LEGEND SECTION --- */
+.custom-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for scrips */
+    gap: 12px;
+    margin-top: 15px;
+    padding: 14px;
+    background: rgba(128, 128, 128, 0.05); /* Subtle contrast box for both themes */
+    border-radius: 12px;
+    border: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.legend-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+/* Scrip Name - Color assigned via JS inline style */
+.legend-name {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+/* Percentage - Color assigned via JS inline style */
+.legend-perc {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
+    font-weight: 700;
+    opacity: 0.9;
+}
+
+/* --- STATE STYLES --- */
+.dummy-mode .pie-chart-wrapper {
+    filter: saturate(0.3) brightness(0.9);
+    opacity: 0.7;
+}
+
+/* --- ANIMATIONS --- */
+.fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 480px) {
+    .custom-legend {
+        grid-template-columns: 1fr; /* Stack legend on small screens */
+    }
+    
+    .portfolio-chart-container {
+        padding: 1rem;
+    }
+}
